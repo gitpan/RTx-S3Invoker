@@ -16,20 +16,23 @@ return unless $session{'CurrentUser'}->HasRight(
 my(@results, @ambiguous);
 my $count = 0;
 
+#We could do the same as Search/Elements/SelectSearchesForObjects but we want
+#the globals too, so we need to know who we are and what we're a member of.
+#Otherwise, we get a list of all saved searches, and while we can load some we
+#"ought" not be able to, we'd die on others.
+#We previously used user->OwnGroups, but it requires the SeeGroup right
 my @groups;
-my $groups = $session{'CurrentUser'}->OwnGroups;
-while( my $group = $groups->Next() ){
-  push @groups, $group->Id;
+foreach my $o ( RT::SavedSearches->new($session{'CurrentUser'})->_PrivacyObjects ){
+  next unless ref($o) eq 'RT::Group';
+  push @groups, $o->Id;
 }
 
 #Alas, binding is pointless due to variable group membership, so we interpolate
-my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND ( (ObjectType='RT::User' AND ObjectId=%i) OR ( ObjectType='RT::Group' AND ObjectId IN (%s) ) ) ) OR ( Name LIKE 'Search - %' AND ObjectType='RT::System' ) ) ORDER BY Description",
-		    "%${do}%",
+my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND ( (ObjectType='RT::User' AND ObjectId=%i) %s ) ) OR ( Name LIKE 'Search - %' AND ObjectType='RT::System' ) ) ORDER BY Description",
+		    "%\Q${do}\E%",
 		    $session{'CurrentUser'}->Id,
-		    join(',', @groups)
+		    scalar @groups ? "OR ( ObjectType='RT::Group' AND ObjectId IN (". join(',', @groups) .') )' : ''
 		   );
-#NOTE: that the query above matches the saved searches that RT reports,
-#although somes users are technically able access searches of other groups...
 
 my $r = $RT::Handle->SimpleQuery("SELECT COUNT(*) FROM Attributes $WHERE;");
 unless ( $r ){

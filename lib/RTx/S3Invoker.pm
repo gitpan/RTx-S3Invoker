@@ -1,5 +1,5 @@
 package RTx::S3Invoker;
-our $VERSION = 0.05;
+our $VERSION = 0.10;
 
 1;
 

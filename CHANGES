@@ -1,2 +1,12 @@
+0.10	2009-08-04
+	Altered Simple Search display text and location.
+
+	Fixed Invoker for users not in any groups,
+	and for users without SeeGroup.
+
+	Quotemeta do's operand for extra SQL-injection protection.
+
+	Removed pointless trailing slash from Invoker invocation.
+
 0.05	2009-08-03
 	Initial public release.

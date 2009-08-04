@@ -2,7 +2,7 @@
 my $q = $$args{Argument};
 if( $q =~ /\bdo:(\S+)/ ){
   RT::Interface::Web::Redirect(RT->Config->Get('WebURL').
-			       'Search/Invoker/?do='.$1);
+			       'Search/Invoker?do='.$1);
 }
 </%init>
 
