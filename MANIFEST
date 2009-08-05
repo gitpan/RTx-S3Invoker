@@ -5,8 +5,8 @@ README
 TODO
 test.pl
 html/Search/Invoker
+html/Callbacks/RTx-S3Invoker/Search/Simple.html/PreForm
 html/Callbacks/RTx-S3Invoker/Search/Simple.html/SearchArgs
-html/Callbacks/RTx-S3Invoker/Search/Simple.html/PostForm
 inc/Module/Install/Base.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/RTx/Factory.pm

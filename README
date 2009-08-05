@@ -1,28 +1,23 @@
 NAME
-    RTx::From - Make it easier to find users and their tickets
+    RTx::S3Invoker - Simple Saved Search Invoker
 
 SYNOPSIS
-    It can be hard to remember the exact name and email address of a user.
-    While powerful, the Configuration/Users search form can be tedious, nor
-    is it an obvious location. Therefore this simple plugin:
+    For power users, accessing saved searches in RT can be rather
+    cumbersome. One must either use the search builder to load a search and
+    then show results, or maintain a browser bookmark than can easily get
+    lost or out of sync. S3Invoker provides an alternative mechanism of
+    accessing saved searches in the simple search as command-line style.
 
-    Adds a `from:' operator to Simple Search.
-        Note that unlike most other operators, which modify ticket queries,
-        this operator acts on principals and therefore cannot be
-        meaningfully combined with other search terms. The results of doing
-        so are undefined and unsupported. However, you may supply multiple
-        `from:' terms, which will be OR'd together.
+DESCRIPTION
+    This module adds a `do:' operator to Simple Search, and provides a brief
+    description on Search/Simple.html
 
-        There is also a work-around if you wish perform a complex query for
-        tickets from a fuzzily-remembered reqiestor:
+    Features of the operator include:
 
-        * Search with `from:'
-        * Select "Requested" for the desired user
-        * "Edit Search"
-
-    Adds a brief description of the operator, and a link to the native user
-    search on Search/Simple.html.
-    Adds a sub-tab on a user's profile to a query for his tickets.
+    The ability to access global searches.
+    Directly display search results, or list of searches matching operand.
+        If no operand is supplied, a list of all accessible saved searches
+        is given.
 
 AUTHOR
     Jerrad Pierce <jpierce@cpan.org>
@@ -32,7 +27,6 @@ LICENSE
     * Thou shalt not claim whole ownership of modified materials.
     * Thou shalt grant the indemnity of the provider of materials.
     * Thou shalt use and dispense freely without other restrictions.
-        Except Admin/Users/from.html which is derived from GPL work by Best
-        Practical. But really, you can consider the above to be "the same
-        terms as perl itself."
+        But really, you can consider the above to be "the same terms as perl
+        itself."
 

@@ -1,3 +1,11 @@
+0.11	2009-08-05
+	Updated MANIFEST so that Simple Search operator description is included
+
+	Fix bungled versioning on CPAN (previous version showed up as mix of
+	0.06 and 0.10)
+
+	Minor tweaks to Invoker.
+
 0.10	2009-08-04
 	Altered Simple Search display text and location.
 

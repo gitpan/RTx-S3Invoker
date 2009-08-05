@@ -1,5 +1,5 @@
-<& /Elements/Header, Title => 'Saved Search Invoker' &>
-<& /Ticket/Elements/Tabs, Title => 'Saved Search Invoker' &>
+<& /Elements/Header, Title => 'Simple Saved Search Invoker' &>
+<& /Ticket/Elements/Tabs, Title => 'Simple Saved Search Invoker' &>
 <& /Elements/ListActions, actions => \@results &>
 
 <ul>
@@ -23,8 +23,7 @@ my $count = 0;
 #We previously used user->OwnGroups, but it requires the SeeGroup right
 my @groups;
 foreach my $o ( RT::SavedSearches->new($session{'CurrentUser'})->_PrivacyObjects ){
-  next unless ref($o) eq 'RT::Group';
-  push @groups, $o->Id;
+  push(@groups, $o->Id) if ref($o) eq 'RT::Group';
 }
 
 #Alas, binding is pointless due to variable group membership, so we interpolate
@@ -36,14 +35,16 @@ my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND (
 
 my $r = $RT::Handle->SimpleQuery("SELECT COUNT(*) FROM Attributes $WHERE;");
 unless ( $r ){
-  push(@results, "Internal error, could not count: <$r>. Please send bug report.");
+  push(@results,
+       sprintf("Internal error, could not count: <%s>.<p>Please send bug report.", $r->error_message)) unless $r;
 }
 elsif( ($count = $r->fetchrow) == 0 ){
   push(@results, "No saved searches match: $do");
 }
 else{
   my $r = $RT::Handle->SimpleQuery("SELECT ObjectType, ObjectId, id, Description FROM Attributes $WHERE;");
-  push(@results, "Internal error, could not select: <$r>. Please send bug report.") unless $r;
+  push(@results,
+       sprintf("Internal error, could not select: <%s>.<p>Please send bug report.", $r->error_message)) unless $r;
   
   if( $count == 1 ){
     RT::Interface::Web::Redirect(RT->Config->Get('WebURL').
