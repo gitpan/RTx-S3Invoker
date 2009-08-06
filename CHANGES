@@ -1,3 +1,8 @@
+0.13	2009-08-06
+	More explicit documentation.
+
+	Fixed bug masking locally created system saved searches.
+
 0.11	2009-08-05
 	Updated MANIFEST so that Simple Search operator description is included
 

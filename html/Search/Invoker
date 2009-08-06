@@ -27,7 +27,7 @@ foreach my $o ( RT::SavedSearches->new($session{'CurrentUser'})->_PrivacyObjects
 }
 
 #Alas, binding is pointless due to variable group membership, so we interpolate
-my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND ( (ObjectType='RT::User' AND ObjectId=%i) %s ) ) OR ( Name LIKE 'Search - %' AND ObjectType='RT::System' ) ) ORDER BY Description",
+my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND ( (ObjectType='RT::User' AND ObjectId=%i) %s ) ) OR ( ObjectType='RT::System' AND (Name LIKE 'Search - %' OR Name='SavedSearch') ) ) ORDER BY Description",
 		    "%\Q${do}\E%",
 		    $session{'CurrentUser'}->Id,
 		    scalar @groups ? "OR ( ObjectType='RT::Group' AND ObjectId IN (". join(',', @groups) .') )' : ''
@@ -36,7 +36,7 @@ my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND (
 my $r = $RT::Handle->SimpleQuery("SELECT COUNT(*) FROM Attributes $WHERE;");
 unless ( $r ){
   push(@results,
-       sprintf("Internal error, could not count: <%s>.<p>Please send bug report.", $r->error_message)) unless $r;
+       sprintf("Internal error, could not count: <%s>. Please send bug report.", $r->error_message)) unless $r;
 }
 elsif( ($count = $r->fetchrow) == 0 ){
   push(@results, "No saved searches match: $do");
@@ -44,7 +44,7 @@ elsif( ($count = $r->fetchrow) == 0 ){
 else{
   my $r = $RT::Handle->SimpleQuery("SELECT ObjectType, ObjectId, id, Description FROM Attributes $WHERE;");
   push(@results,
-       sprintf("Internal error, could not select: <%s>.<p>Please send bug report.", $r->error_message)) unless $r;
+       sprintf("Internal error, could not select: <%s>.Please send bug report.", $r->error_message)) unless $r;
   
   if( $count == 1 ){
     RT::Interface::Web::Redirect(RT->Config->Get('WebURL').
