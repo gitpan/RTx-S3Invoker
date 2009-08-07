@@ -1,3 +1,7 @@
+0.14	2009-08-06
+	Fixed do: to work as advertized.
+	/Search/Invoker?do= worked, but was not caught by the search callback.
+
 0.13	2009-08-06
 	More explicit documentation.
 

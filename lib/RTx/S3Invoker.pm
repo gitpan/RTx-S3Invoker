@@ -1,6 +1,6 @@
 package RTx::S3Invoker;
 use v5.8.3; #Shut-up Module::Install, it's the same as RT.
-our $VERSION = 0.13;
+our $VERSION = 0.14;
 
 1;
 
@@ -40,8 +40,12 @@ Features of the operator include:
 
 =item Directly display search results, or list of searches matching operand.
 
-Matching is oone with LIKE '%operand%'. Consequently, if no operand is
-supplied, l list of all accessible saved searches is shown.
+S3Invoker tries to 'Do What You Mean'. If it finds exactly one thing matching
+the operand (right-hand side of the colon), it runs that search, if there are
+many matches (Ambiguous search) it lists them as clickable links.
+
+Matching is done with LIKE '%operand%'. Consequently, if no operand is
+supplied, a list of all accessible saved searches is shown.
 
 =item BONUS: The ability to access global searches!
 
@@ -55,6 +59,8 @@ C<do:unowned> at your leisure.
 =head1 AUTHOR
 
 Jerrad Pierce <jpierce@cpan.org>
+
+Bug reports and suggestions by Allen Lee.
 
 =head1 LICENSE
 
