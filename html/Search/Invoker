@@ -27,7 +27,7 @@ foreach my $o ( RT::SavedSearches->new($session{'CurrentUser'})->_PrivacyObjects
 }
 
 #Alas, binding is pointless due to variable group membership, so we interpolate
-my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND ( (ObjectType='RT::User' AND ObjectId=%i) %s ) ) OR ( ObjectType='RT::System' AND (Name LIKE 'Search - %' OR Name='SavedSearch') ) ) ORDER BY Description",
+my $WHERE = sprintf("WHERE Description LIKE '%s' AND ( (Name='SavedSearch' AND ( (ObjectType='RT::User' AND ObjectId=%i) %s ) ) OR ( ObjectType='RT::System' AND (Name LIKE 'Search - %' OR Name='SavedSearch') ) ) GROUP BY Description, ObjectType, ObjectId, id ORDER BY Description",
 		    "%\Q${do}\E%",
 		    $session{'CurrentUser'}->Id,
 		    scalar @groups ? "OR ( ObjectType='RT::Group' AND ObjectId IN (". join(',', @groups) .') )' : ''

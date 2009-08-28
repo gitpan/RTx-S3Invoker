@@ -1,6 +1,11 @@
+0.15	2009-08-28
+	SQL92 / Postgres compatability tweak by Ian Smith
+
 0.14	2009-08-06
 	Fixed do: to work as advertized.
 	/Search/Invoker?do= worked, but was not caught by the search callback.
+
+	Amended documentation again.
 
 0.13	2009-08-06
 	More explicit documentation.
