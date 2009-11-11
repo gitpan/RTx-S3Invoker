@@ -1,6 +1,6 @@
 package RTx::S3Invoker;
 use v5.8.3; #Shut-up Module::Install, it's the same as RT.
-our $VERSION = 0.15;
+our $VERSION = 0.16;
 
 1;
 

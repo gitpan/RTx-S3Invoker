@@ -1,3 +1,7 @@
+0.16	2009-11-11
+	Fixed handling of ambiguous search broken in 0.15's attempt to
+	sort results more robustly.	
+
 0.15	2009-08-28
 	SQL92 / Postgres compatability tweak by Ian Smith
 
